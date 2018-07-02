@@ -3,6 +3,11 @@ import * as snoowrap from 'snoowrap'
 
 let r = null;
 
+type Params = {
+    time: string,
+    limit: number
+}
+
 export default {
     init: () => {
         r = new snoowrap({
@@ -13,23 +18,23 @@ export default {
             password: process.env.REDDIT_PASSWORD
         })
     },
-    getTopPostsYoutubeIds: (o) => {
+    getTopPostsYoutubeIds: (o: Params) => {
         const defaults = {
             time: 'week',
             limit: 20
-        }
+        };
 
-        const options = Object.assign({}, defaults, o)
+        const options = Object.assign({}, defaults, o);
 
         return r.getSubreddit('youtubehaiku')
             .getTop(options)
             .then(result => {
-                const res = []
+                const res = [];
 
                 for (let listing of result) {
-                    const listingUrl = listing.url
+                    const listingUrl = listing.url;
                     if (listingUrl) {
-                        const id = youtubeUrl.extractId(listingUrl)
+                        const id = youtubeUrl.extractId(listingUrl);
                         id && res.push(id)
                     }
                 }

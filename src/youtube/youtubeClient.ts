@@ -4,6 +4,7 @@ import * as opn from 'opn';
 import * as util from 'util'
 import { Playlist } from './playlist';
 import { PlaylistItem } from './playlistItem';
+import { Subject } from 'rxjs/index';
 
 export class YoutubeClient {
     private server = new Lien({
@@ -15,13 +16,15 @@ export class YoutubeClient {
 
     private tokensSet = false;
 
+    public onAuthorize: Subject<boolean> = new Subject<boolean>();
+
     constructor() {
         
         this.oAuthClient = Youtube.authenticate({
             type: 'oauth',
-            client_id: process.env.CLIENT_ID,
-            client_secret: process.env.CLIENT_SECRET,
-            redirect_url: process.env.REDIRECT_URL
+            client_id: process.env.GOOGLE_API_CLIENT_ID,
+            client_secret: process.env.GOOGLE_API_CLIENT_SECRET,
+            redirect_url: process.env.GOOGLE_API_REDIRECT_URL
         });
 
         opn(this.oAuthClient.generateAuthUrl({
@@ -35,14 +38,7 @@ export class YoutubeClient {
                     this.tokensSet = true;
                     this.oAuthClient.setCredentials(tokens);
                     lien.end();
-                    const playlistId = await this.insertPlaylist({
-                        title: 'TEST PLAYLIST2',
-                        description: 'test'
-                    });
-                    const res = await this.insertVideoToPlaylist({
-                        playlistId,
-                        videoId: "1qNRvuHli-M"
-                    });
+                    this.onAuthorize.next(true);
                 }
             });
         });
