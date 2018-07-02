@@ -1,18 +1,11 @@
-import google from "googleapis";
-import dotenv from "dotenv"
+import * as dotenv from "dotenv"
+import rf from './src/reddit-fetcher'
 
-import Lien from "lien";
+dotenv.load();
 
-const OAuth2 = google.auth.OAuth2;
-
-
-const server = new Lien({
-    host: 'localhost',
-    port: 5000
-});
-
-const oauth2Client = new OAuth2(
-    'YOUR_CLIENT_ID',
-    'YOUR_CLIENT_SECRET',
-    'http://localhost:5000/oauthcallback'
-);
+// Debug code please remove
+rf.init()
+rf.getTopPostsYoutubeIds({
+    time: 'week',
+    limit: +process.env.PLAYLIST_SIZE || 100
+}).then(res => console.log(res))

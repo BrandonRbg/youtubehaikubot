@@ -1,6 +1,5 @@
 import * as Youtube from 'youtube-api';
 import * as Lien from 'lien';
-import * as dotenv from 'dotenv';
 import * as opn from 'opn';
 
 class YoutubeClient {
@@ -14,7 +13,7 @@ class YoutubeClient {
     private tokensSet = false;
 
     constructor() {
-        dotenv.load();
+        
         this.oAuthClient = Youtube.authenticate({
             type: 'oauth',
             client_id: process.env.CLIENT_ID,

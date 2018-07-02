@@ -14,9 +14,11 @@
     "googleapis": "^32.0.0",
     "lien": "^3.2.0",
     "opn": "^5.3.0",
+    "snoowrap": "^1.15.2",
     "ts-node": "^7.0.0",
     "typescript": "^2.9.2",
-    "youtube-api": "^2.0.9"
+    "youtube-api": "^2.0.9",
+    "youtube-url": "^0.5.0"
   },
   "devDependencies": {
     "@types/dotenv": "^4.0.3"
